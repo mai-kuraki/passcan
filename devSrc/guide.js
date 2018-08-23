@@ -16,7 +16,7 @@ class Guide {
             setTimeout(() => {
                 this.loading(false);
             }, 4500);
-            chrome.webstore.install('https://chrome.google.com/webstore/detail/imamemhokkdleoelohnmkimbmpfglcil', () => {
+            chrome.webstore.install('https://chrome.google.com/webstore/detail/ilbddbbikgbfohimdbkegcminkeagpao', () => {
                 console.log('安装成功');
                 this.status = false;
                 this.handleInstall();
