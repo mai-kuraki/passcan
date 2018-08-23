@@ -13,16 +13,13 @@ class Guide {
         $(document).on('click', '#install', () => {
             if (!chrome.hasOwnProperty('webstore')) return;
             this.loading(true);
-            setTimeout(() => {
-                this.loading(false);
-            }, 4500);
             let link = document.createElement('link');
             link.rel = 'chrome-webstore-item';
             link.href = 'https://chrome.google.com/webstore/detail/ilbddbbikgbfohimdbkegcminkeagpao';
             document.head.appendChild(link);
             chrome.webstore.install('https://chrome.google.com/webstore/detail/ilbddbbikgbfohimdbkegcminkeagpao', () => {
                 console.log('安装成功');
-                this.status = false;
+                this.status = true;
                 this.handleInstall();
             }, (e) => {
                 console.log(e)
@@ -31,10 +28,23 @@ class Guide {
                 this.handleInstall();
             })
         });
+        $(document).on('click', '#localInstall', () => {
+            $('.local-guide-panel').hide();
+            $('.local-install-panel').css('display', 'flex');
+        })
     }
 
     handleInstall() {
-        
+        this.loading(false);
+        if(this.status) {
+            $('.guide-panel').hide();
+            $('.install-panel').css('display', 'flex');
+            $('.install-panel .step-1').hide();
+            $('.install-panel .step-2').show();
+        }else {
+            $('.guide-panel').hide();
+            $('.local-guide-panel').css('display', 'flex');
+        }
     }
 
 
