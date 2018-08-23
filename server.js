@@ -55,6 +55,13 @@ http.createServer((request, response) => {
                 }
                 response.end(data);
             });
+        }else if(url == '/googlefb515413e5993507.html'){
+            fs.readFile('./buildSrc/googlefb515413e5993507.html','utf-8',(err,data) => {
+                if(err){
+                    throw err ;
+                }
+                response.end(data);
+            });
         }else {
             response.end('');
         }
