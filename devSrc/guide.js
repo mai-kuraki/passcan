@@ -20,7 +20,8 @@ class Guide {
                 console.log('安装成功');
                 this.status = false;
                 this.handleInstall();
-            }, () => {
+            }, (e) => {
+                console.log(e)
                 console.log('安装失败');
                 this.status = true;
                 this.handleInstall();
