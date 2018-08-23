@@ -1,0 +1,31 @@
+{
+    "name": "Passcan",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "description": "",
+    "icons" : {
+        "16" : "icon.png",
+        "48" : "icon.png",
+        "128" : "icon.png"
+    },
+    "browser_action": {
+        "default_title": "Passcan",
+        "default_icon": "icon1.png",
+        "default_popup": "popup_login.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*/*", "file://*"],
+            "css": ["style/content.css"],
+            "js": ["js/content.js"]
+        }
+    ],
+    "background": {
+        "scripts": ["js/background.js"],
+        "persistent": false
+    },
+    "permissions": [
+        "storage",
+        "tabs"
+    ]
+}
