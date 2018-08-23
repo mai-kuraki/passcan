@@ -16,6 +16,10 @@ class Guide {
             setTimeout(() => {
                 this.loading(false);
             }, 4500);
+            let link = document.createElement('link');
+            link.rel = 'chrome-webstore-item';
+            link.href = 'https://chrome.google.com/webstore/detail/ilbddbbikgbfohimdbkegcminkeagpao';
+            document.head.appendChild(link);
             chrome.webstore.install('https://chrome.google.com/webstore/detail/ilbddbbikgbfohimdbkegcminkeagpao', () => {
                 console.log('安装成功');
                 this.status = false;
