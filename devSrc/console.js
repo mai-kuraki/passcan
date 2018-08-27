@@ -89,14 +89,20 @@ class Console {
     initPage() {
         let action = this.getQueryString('action');
         let url = this.getQueryString('url');
-        console.log(url);
         if(action && action == 'add') {
             if(url) {
+                let account = this.getQueryString('n') || '';
+                let pass = this.getQueryString('p') || '';
                 setTimeout(() => {
                     $('.form-base-info #site').val(url).parent().addClass('is-dirty');
+                    $('.form-base-info #username').val(account).parent().addClass('is-dirty');
+                    $('.form-base-info #password').val(pass).parent().addClass('is-dirty');
                 }, 250);
             }
             $('.add-new-button').click();
+        }
+        if(location.protocol != 'chrome-extension:') {
+            $('.toInstall').css('display', 'flex');
         }
     }
 
@@ -302,11 +308,13 @@ class Console {
             that.dialogOpen();
         });
         $(document).on('click', '.open-dialog', function (e) {
+            let action = $(this).attr('data-action');
             let index = $(this).parent().attr('data-key');
             let webData = that.webItem[index];
             let webId = webData.web_id;
             let rule = webData.rule;
             that.editMode = rule == 2?true:false;
+            that.openAction = action;
             that.getWebInfo(webId);
             that.dialogMode = 'edit';
         });
@@ -832,12 +840,18 @@ class Console {
     dialogOpen() {
         this.dialog.showModal();
         this.getSwiper();
+        if(this.openAction == 'permission-s') {
+            $($('.tab-hd .mdl-button')[1]).click();
+        }else if(this.openAction == 'permission-c'){
+            $($('.tab-hd .mdl-button')[2]).click();
+        }
         this.initDialog();
     }
 
     dialogClose() {
         this.dialog.close();
         this.getSwiper().slideTo(0);
+        this.openAction = '';
         $('.tab-hd .active').removeClass('active');
         $($('.tab-hd .mdl-button')[0]).addClass('active');
     }
@@ -902,9 +916,9 @@ class Console {
                         </button>
                         <ul class="action-menu mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                             for="menu-lower-right-${k}" data-key="${k}">
-                            <li class="mdl-menu__item open-dialog">详情</li>
-                            <li class="mdl-menu__item open-dialog">查看权限</li>
-                            <li class="mdl-menu__item open-dialog">管理权限</li>
+                            <li class="mdl-menu__item open-dialog" data-action="info">详情</li>
+                            <li class="mdl-menu__item open-dialog" data-action="permission-s">查看权限</li>
+                            <li class="mdl-menu__item open-dialog" data-action="permission-c">管理权限</li>
                             <li class="mdl-menu__item del-dialog">删除</li>
                         </ul>
                     </div>

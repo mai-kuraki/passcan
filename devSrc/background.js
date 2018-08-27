@@ -33,7 +33,9 @@ class App {
                     }, (tabs) => {
                         if(tabs.length > 0) {
                             let url = tabs[0].url;
-                            window.open(chrome.runtime.getURL(`console.html?action=add&url=${url}`));
+                            let account = request.account;
+                            let password = request.pass;
+                            window.open(chrome.runtime.getURL(`console.html?action=add&url=${url}&n=${account}&p=${password}`));
                         }
                     });
                     sendResponse({status: 200});

@@ -694,4 +694,7 @@ table {
 .loading-show {
   display: flex; }
 
+.toInstall {
+  display: none !important; }
+
 /*# sourceMappingURL=console.css.map */

@@ -67,12 +67,14 @@ class Content {
             if(this.pass != passwordInput) {
                 this.pass = passwordInput;
                 passwordInput.setAttribute('autocomplete', 'off');
+                passwordInput.dataset.passcaninput = 'password';
             }
             this.addFillIcon(passwordInput, 'pass');
             if(textInput) {
                 if(this.account != textInput) {
                     this.account = textInput;
                     textInput.setAttribute('autocomplete', 'off');
+                    textInput.dataset.passcaninput = 'text';
                 }
                 this.addFillIcon(textInput, 'account');
             }
@@ -99,7 +101,7 @@ class Content {
             if(elRect.left == curRect.left && elRect.width == curRect.width && elRect.top == curRect.top && elRect.height == curRect.height) {
                 return;
             }
-            console.log('in change Icon');
+            // console.log('in change Icon');
             curIcon.style.left = `${elRect.left + (elRect.width - iconWidth - elRect.width * 0.02)}px`;
             curIcon.style.top = `${elRect.top + (elRect.height - iconHeight) / 2}px`;
             if(type == 'pass') {
@@ -109,7 +111,7 @@ class Content {
             }
             return;
         }
-        console.log('in add Icon');
+        // console.log('in add Icon');
         let img = document.createElement('IMG');
         let uniqueId = `passcanFill-${this.randomString(8)}`;
         img.src = icon;
@@ -346,6 +348,11 @@ class Content {
                 case 'updateAPI':
                     let apiHost = request.apiHost;
                     HOST = apiHost;
+                    break;
+                case 'getFormValue':
+                    let account = this.account.value || '';
+                    let pass = this.pass.value || '';
+                    sendResponse({account: account, pass: pass});
                     break;
             }
         });

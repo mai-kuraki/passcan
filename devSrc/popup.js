@@ -42,7 +42,17 @@ class Popup {
             this.loginOut();
         });
         $(document).on('click', '#addToPasscan', () => {
-            chrome.runtime.sendMessage({event: 'addToPasscan'},(response) => {
+            chrome.tabs.query({
+                active: true,
+                currentWindow: true,
+                windowType: 'normal'
+            }, (tabs) => {
+                if(tabs.length > 0) {
+                    chrome.tabs.sendMessage(tabs[0].id, {event: 'getFormValue'},(response) => {
+                        chrome.runtime.sendMessage({event: 'addToPasscan', account: response.account, pass: response.pass},(res) => {
+                        });
+                    })
+                }
             });
         });
         $(document).on('click', '#toPasscan', () => {
@@ -90,6 +100,16 @@ class Popup {
                     $('.curApi').html(`当前API地址:<p>${apiHost}</p>`).show();
                 });
             }
+            chrome.tabs.query({
+                active: true,
+                currentWindow: true,
+                windowType: 'normal'
+            }, (tabs) => {
+                if(tabs.length > 0) {
+                    chrome.tabs.sendMessage(tabs[0].id, {event: 'updateAPI', apiHost: apiHost},(response) => {
+                    })
+                }
+            });
             chrome.runtime.sendMessage({event: 'updateAPI', apiHost: apiHost}, (response) => {
             });
         })
